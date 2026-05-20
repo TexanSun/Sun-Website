@@ -1621,24 +1621,25 @@ const MAKE_WEBHOOK_URL = "https://hook.us2.make.com/2ij8ahyzrr1rv6tf28qbq4kb904t
 
 document.getElementById("quoteForm").addEventListener("submit", async function (e) {
   e.preventDefault();
-
   console.log("quoteForm submit fired");
+
   const form = this;
   const formData = new FormData(form);
-  const payload = Object.fromEntries(formData.entries());
 
   try {
     const response = await fetch(MAKE_WEBHOOK_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
+      body: formData
     });
+
+    console.log("status:", response.status);
 
     if (!response.ok) throw new Error("Webhook failed");
 
     document.getElementById("formNote").hidden = false;
     form.reset();
   } catch (error) {
+    console.error(error);
     alert("There was a problem sending your request.");
   }
 });
