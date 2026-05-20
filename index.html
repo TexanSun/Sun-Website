@@ -1617,11 +1617,10 @@ LyogQWxsaSBBSSB3aWRnZXQgZm9yIHRleGFuc3VuZmFjaWxpdHlzZXJ2aWNlcy5jb20gKi8KKGZ1bmN0
 })();
 
 <script>
-const MAKE_WEBHOOK_URL = "https://hook.us2.make.com/2ij8ahyzrr1rv6tf28qbq4kb904tij8h";
+const MAKE_WEBHOOK_URL = "PASTE_YOUR_REAL_MAKE_WEBHOOK_URL";
 
 document.getElementById("quoteForm").addEventListener("submit", async function (e) {
   e.preventDefault();
-  console.log("quoteForm submit fired");
 
   const form = this;
   const formData = new FormData(form);
@@ -1629,20 +1628,23 @@ document.getElementById("quoteForm").addEventListener("submit", async function (
   try {
     const response = await fetch(MAKE_WEBHOOK_URL, {
       method: "POST",
-      body: formData
+      body: formData,
+      mode: "cors"
     });
 
-    console.log("status:", response.status);
+    console.log("Webhook status:", response.status);
 
-    if (!response.ok) throw new Error("Webhook failed");
+    if (!response.ok) {
+      throw new Error("Webhook failed with status " + response.status);
+    }
 
     document.getElementById("formNote").hidden = false;
     form.reset();
   } catch (error) {
-    console.error(error);
-    alert("There was a problem sending your request.");
+    console.error("Webhook error:", error);
+    alert("Form did not send to Make.");
   }
 });
 </script>
-</script></body>
+</body>
 </html>
