@@ -1320,5 +1320,31 @@ document.getElementById("quoteForm").addEventListener("submit", async function (
   }
 });
 </script>
+<script>
+document.getElementById("walkthroughForm").addEventListener("submit", async function (e) {
+  e.preventDefault();
+
+  const form = this;
+  const formData = new FormData(form);
+  const payload = { formType: "walkthrough_request", siteDomain: "texansunfacilityservices.com" };
+  for (const [key, value] of formData.entries()) payload[key] = value;
+
+  try {
+    const response = await fetch("https://hook.us2.make.com/x1wivp3r4jtuzehb67ac6ziovbauw7gv", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    console.log("Walkthrough webhook status:", response.status);
+    if (!response.ok) throw new Error("Status " + response.status);
+
+    document.getElementById("walkthroughFormNote").hidden = false;
+    form.reset();
+  } catch (error) {
+    console.error("Walkthrough webhook error:", error);
+    alert("Form did not send to Make.");
+  }
+});
+</script>
 </body>
 </html>
