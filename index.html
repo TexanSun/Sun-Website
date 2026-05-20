@@ -1616,6 +1616,31 @@ LyogQWxsaSBBSSB3aWRnZXQgZm9yIHRleGFuc3VuZmFjaWxpdHlzZXJ2aWNlcy5jb20gKi8KKGZ1bmN0
   });
 })();
 
+<script>
+const MAKE_WEBHOOK_URL = "https://hook.us2.make.com/2ij8ahyzrr1rv6tf28qbq4kb904tij8h";
 
+document.getElementById("quoteForm").addEventListener("submit", async function (e) {
+  e.preventDefault();
+
+  const form = this;
+  const formData = new FormData(form);
+  const payload = Object.fromEntries(formData.entries());
+
+  try {
+    const response = await fetch(MAKE_WEBHOOK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) throw new Error("Webhook failed");
+
+    document.getElementById("formNote").hidden = false;
+    form.reset();
+  } catch (error) {
+    alert("There was a problem sending your request.");
+  }
+});
+</script>
 </script></body>
 </html>
