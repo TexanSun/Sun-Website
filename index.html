@@ -1622,6 +1622,7 @@ const MAKE_WEBHOOK_URL = "https://hook.us2.make.com/2ij8ahyzrr1rv6tf28qbq4kb904t
 document.getElementById("quoteForm").addEventListener("submit", async function (e) {
   e.preventDefault();
 
+  console.log("quoteForm submit fired");
   const form = this;
   const formData = new FormData(form);
   const payload = Object.fromEntries(formData.entries());
